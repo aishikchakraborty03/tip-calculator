@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error {
+            display: none;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tip Calculator</h1>
+        <div class="input-group">
+            <label for="bill">Bill Amount(₹)</label>
+            <input type="number" id="bill" min="0" step="0.01" placeholder="Enter bill amount">
+            <div id="billError" class="error">Please enter a valid bill amount</div>
+        </div>
+        <div class="input-group">
+            <label for="tip">Tip Percentage(%)</label>
+            <input type="number" id="tip" min="0" max="100" step="1" placeholder="Enter tip percentage">
+            <div id="tipError" class="error">Please enter a valid tip percentage (0-100)</div>
+        </div>
+        <button id="calculate">Calculate</button>
+        <div class="result">
+            Total: ₹<span id="total">0.00</span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        const billInput = document.getElementById('bill');
+        const tipInput = document.getElementById('tip');
+        const calculateButton = document.getElementById('calculate');
+        const totalSpan = document.getElementById('total');
+        const billError = document.getElementById('billError');
+        const tipError = document.getElementById('tipError');
+
+        calculateButton.addEventListener('click', calculateTip);
+
+        function calculateTip() {
+            const bill = parseFloat(billInput.value);
+            const tip = parseFloat(tipInput.value);
+
+            if (isNaN(bill) || bill < 0) {
+                billError.style.display = 'block';
+                return;
+            } else {
+                billError.style.display = 'none';
+            }
+
+            if (isNaN(tip) || tip < 0 || tip > 100) {
+                tipError.style.display = 'block';
+                return;
+            } else {
+                tipError.style.display = 'none';
+            }
+
+            const total = bill + (bill * (tip / 100));
+            totalSpan.textContent = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>
